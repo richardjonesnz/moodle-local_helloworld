@@ -26,11 +26,11 @@ require_once('../../config.php');
 
 $name = optional_param('name', 'World!', PARAM_ALPHA);
 
-echo html_writer::tag('h2', 'Hello ' . $name);
-echo html_writer::tag('p', 'What is your name?');
+echo html_writer::tag('h2', get_string('hello', 'local_helloworld', $name));
+echo html_writer::tag('p', get_string('getname', 'local_helloworld'));
 
 $form = '<form action="index.php">
-  <label for="name">Name:</label><br>
+  <label for="name">Name: </label>
   <input type="text" id="name" name="name" value="User">
   <input type="submit" value="Submit">
 </form>';
@@ -38,7 +38,7 @@ $form = '<form action="index.php">
 echo $form;
 
 $url = new moodle_url('http://192.168.1.100/moodle391');
-echo html_writer::link($url, 'Go to the front page');
+echo html_writer::link($url, get_string('frontpage', 'local_helloworld'));
 echo html_writer::tag('br', null);
 $url = new moodle_url('index.php', ['name' => $_GET['name']]);
-echo html_writer::link($url, 'Go to main page');
+echo html_writer::link($url, get_string('main', 'local_helloworld'));

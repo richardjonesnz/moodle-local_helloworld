@@ -23,3 +23,7 @@
  */
 
 $string['pluginname'] = 'Hello world';
+$string['hello'] = 'Hello {$a}';
+$string['getname'] = 'What is your name?';
+$string['main'] = 'Got to main page';
+$string['frontpage'] = 'Front page';
