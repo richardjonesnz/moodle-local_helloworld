@@ -46,14 +46,11 @@ $form = '<form action="'.$PAGE->url.'">
 </form>';
 echo $form;
 
-// Get the input and process.
-$input = s($_GET['name']);
-
 // Add some links.
 $url = new moodle_url('http://192.168.1.100/moodle391');
 echo html_writer::link($url, get_string('frontpage', 'local_helloworld'));
 echo html_writer::tag('br', null);
-$url = new moodle_url('index.php', ['name' => $input]);
+$url = new moodle_url('index.php', ['name' => $name]);
 echo html_writer::link($url, get_string('main', 'local_helloworld'));
 
 // Output the moodle footer (not a simple html footer).
