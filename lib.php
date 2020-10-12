@@ -40,8 +40,12 @@ defined('MOODLE_INTERNAL') || die();
  * @param navigation_node $frontpage Node representing the front page in the navigation tree.
  */
 function local_helloworld_extend_navigation_frontpage(navigation_node $frontpage) {
-    $frontpage->add(
-        get_string('pluginname', 'local_helloworld'),
-        new moodle_url('/local/helloworld/index.php')
-    );
+
+    if (get_config('local_helloworld', 'showinnavigation')) {
+
+        $frontpage->add(
+            get_string('pluginname', 'local_helloworld'),
+            new moodle_url('/local/helloworld/index.php')
+        );
+    }
 }

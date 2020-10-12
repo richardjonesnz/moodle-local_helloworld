@@ -27,3 +27,8 @@ $string['hello'] = 'Hello {$a}';
 $string['getname'] = 'What is your name?';
 $string['main'] = 'Got to main page';
 $string['frontpage'] = 'Front page';
+
+// Settings.
+$string['manage'] = 'Manage Hello world';
+$string['showinnavigation'] = 'Show in navigation';
+$string['showinnavigation_detail'] = 'When enabled the site navigation will display a link to the Hello world plugin main page';
