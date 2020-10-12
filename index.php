@@ -23,21 +23,37 @@
 
 require_once('../../config.php');
 
+// Set up the optional parameter with a default value.
 $name = optional_param('name', 'World!', PARAM_ALPHA);
 
-echo html_writer::tag('h2', get_string('hello', 'local_helloworld', $name));
-echo html_writer::tag('p', get_string('getname', 'local_helloworld'));
+// Setup the page.
+$PAGE->set_url(new moodle_url('/local/helloworld/index.php'));
+$PAGE->set_context(context_system::instance());
+$PAGE->set_pagelayout('standard');
+$PAGE->set_title(get_string('pluginname', 'local_helloworld'));
+$PAGE->set_heading(get_string('hello', 'local_helloworld', $name));
 
-$form = '<form action="index.php">
+// Page header information (not the simple html heading).
+echo $OUTPUT->header();
+
+// Add a simple html form to be displayed.
+echo html_writer::tag('p', get_string('getname', 'local_helloworld'));
+$form = '<form action="'.$PAGE->url.'">
   <label for="name">Name: </label>
   <input type="text" id="name" name="name" value="User">
   <input type="submit" value="Submit">
 </form>';
-
 echo $form;
 
+// Get the input and process.
+$input = s($_GET['name']);
+
+// Add some links.
 $url = new moodle_url('http://192.168.1.100/moodle391');
 echo html_writer::link($url, get_string('frontpage', 'local_helloworld'));
 echo html_writer::tag('br', null);
-$url = new moodle_url('index.php', ['name' => $_GET['name']]);
+$url = new moodle_url('index.php', ['name' => $input]);
 echo html_writer::link($url, get_string('main', 'local_helloworld'));
+
+// Output the moodle footer (not a simple html footer).
+echo $OUTPUT->footer();
