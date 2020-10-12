@@ -28,6 +28,7 @@ $name = optional_param('name', 'World!', PARAM_ALPHA);
 
 // Setup the page.
 $PAGE->set_url(new moodle_url('/local/helloworld/index.php'));
+require_login();
 $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('pluginname', 'local_helloworld'));
