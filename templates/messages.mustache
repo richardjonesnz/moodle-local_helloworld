@@ -1,0 +1,17 @@
+<h3>List of messages</h3>
+<div class="card-columns">
+    {{# data}}
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Message: {{id}}</p>
+                <p class="card-text">{{message}}</p>
+                <p class="card-footer">{{#userdate}} {{timecreated}}, %d %B %Y, %I:%M %p {{/userdate}}</p>
+            </div>
+         </div>
+    {{/ data}}
+</div>
+<br>
+<ul>
+    <li><a href="{{url_front}}">{{link_front}}</a></li>
+    <li><a href="{{url_here}}">{{link_here}}</a></li>
+</ul>

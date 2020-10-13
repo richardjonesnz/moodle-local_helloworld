@@ -22,6 +22,7 @@
  */
 use \local_helloworld\utility\messageform;
 require_once('../../config.php');
+global $DB;
 
 // Setup the page.
 $context = context_system::instance();
@@ -42,15 +43,32 @@ $form = new messageform();
 $form->display();
 
 if ($data = $form->get_data()) {
-    echo format_text($data->message);
+    // We have data let's save it in the database.
+    $data->timecreated = time();
+    $DB->insert_record('local_helloworld_messages', $data);
 }
 
+// Display the records from the database.
+$messages = $DB->get_records('local_helloworld_messages', null, null, '*');
+$cardlist = new stdClass();
+foreach ($messages as $m) {
+    $data = array();
+    $data['id'] = $m->id;
+    $data['message'] = $m->message;
+    $data['timecreated'] = $m->timecreated;
+    $cardlist->data[] = $data;
+}
 // Add some links.
 $url = new moodle_url('http://192.168.1.100/moodle391');
-echo html_writer::link($url, get_string('frontpage', 'local_helloworld'));
-echo html_writer::tag('br', null);
+$cardlist->url_front = $url->out(false);
+$cardlist->link_front = get_string('frontpage', 'local_helloworld');
 $url = new moodle_url('index.php');
-echo html_writer::link($url, get_string('main', 'local_helloworld'));
+$cardlist->url_here = $url->out(false);
+$cardlist->link_here = get_string('main', 'local_helloworld');
+
+echo $OUTPUT->render_from_template('local_helloworld/messages', $cardlist);
+
+
 
 // Output the moodle footer (not a simple html footer).
 echo $OUTPUT->footer();
