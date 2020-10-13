@@ -20,37 +20,36 @@
  * @package local_helloworld
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+use \local_helloworld\utility\messageform;
 require_once('../../config.php');
 
-// Set up the optional parameter with a default value.
-$name = optional_param('name', 'World!', PARAM_ALPHA);
-
 // Setup the page.
-$PAGE->set_url(new moodle_url('/local/helloworld/index.php'));
+$context = context_system::instance();
+
+$PAGE->set_context($context);
 require_login();
-$PAGE->set_context(context_system::instance());
+
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('pluginname', 'local_helloworld'));
-$PAGE->set_heading(get_string('hello', 'local_helloworld', $name));
+$PAGE->set_heading(get_string('hello', 'local_helloworld'));
+$PAGE->set_url(new moodle_url('/local/helloworld/index.php'));
 
 // Page header information (not the simple html heading).
 echo $OUTPUT->header();
 
 // Add a simple html form to be displayed.
-echo html_writer::tag('p', get_string('getname', 'local_helloworld'));
-$form = '<form action="'.$PAGE->url.'">
-  <label for="name">Name: </label>
-  <input type="text" id="name" name="name" value="User">
-  <input type="submit" value="Submit">
-</form>';
-echo $form;
+$form = new messageform();
+$form->display();
+
+if ($data = $form->get_data()) {
+    echo format_text($data->message);
+}
 
 // Add some links.
 $url = new moodle_url('http://192.168.1.100/moodle391');
 echo html_writer::link($url, get_string('frontpage', 'local_helloworld'));
 echo html_writer::tag('br', null);
-$url = new moodle_url('index.php', ['name' => $name]);
+$url = new moodle_url('index.php');
 echo html_writer::link($url, get_string('main', 'local_helloworld'));
 
 // Output the moodle footer (not a simple html footer).

@@ -23,4 +23,4 @@
 
 defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'local_helloworld';
-$plugin->version = 2020101203;
+$plugin->version = 2020101204;

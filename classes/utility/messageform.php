@@ -15,22 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * English language strings for the plugin
+ * Form for message input.
  *
  * @package local_helloworld
- * @copyright moodle hq
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+namespace local_helloworld\utility;
+use moodleform;
 
-$string['pluginname'] = 'Hello world';
-$string['hello'] = 'Hello User';
-$string['main'] = 'Got to main page';
-$string['frontpage'] = 'Front page';
+class messageform extends moodleform {
 
-// Settings.
-$string['manage'] = 'Manage Hello world';
-$string['showinnavigation'] = 'Show in navigation';
-$string['showinnavigation_detail'] = 'When enabled the site navigation will display a link to the Hello world plugin main page';
+    public function definition() {
 
-// Form.
-$string['prompt'] = 'Enter your message for the wall:';
+            $mform = $this->_form;
+
+            // message
+            $mform->addElement('textarea', 'message', get_string('prompt', 'local_helloworld'),
+                    'wrap="virtual" rows="5" "cols="50"');
+            $mform->setType('message', PARAM_TEXT);
+            $mform->addRule('message', null, 'required', null, 'client');
+
+            // Add the submit button.
+            $this->add_action_buttons();
+    }
+}
