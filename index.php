@@ -30,6 +30,10 @@ $context = context_system::instance();
 $PAGE->set_context($context);
 require_login();
 
+if (isguestuser()) {
+   print_error('noguest');
+}
+
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('pluginname', 'local_helloworld'));
 $PAGE->set_heading(get_string('hello', 'local_helloworld'));
@@ -38,11 +42,16 @@ $PAGE->set_url(new moodle_url('/local/helloworld/index.php'));
 // Page header information (not the simple html heading).
 echo $OUTPUT->header();
 
+if (isguestuser()) {
+    print_error('noguest');
+    exit;
+}
+
 // Add a simple html form to be displayed.
 $form = new messageform();
 $form->display();
 
-if ($data = $form->get_data()) {
+if ( ($data = data_submitted()) && (confirm_sesskey()) ) {
     // We have data let's save it in the database.
     $data->message = format_text($data->message);
     $data->timecreated = time();

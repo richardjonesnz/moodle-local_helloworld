@@ -41,11 +41,14 @@ defined('MOODLE_INTERNAL') || die();
  */
 function local_helloworld_extend_navigation_frontpage(navigation_node $frontpage) {
 
-    if (get_config('local_helloworld', 'showinnavigation')) {
+    if ( isloggedin() && !isguestuser() ) {
 
-        $frontpage->add(
-            get_string('pluginname', 'local_helloworld'),
-            new moodle_url('/local/helloworld/index.php')
-        );
+        if (get_config('local_helloworld', 'showinnavigation')) {
+
+            $frontpage->add(
+                get_string('pluginname', 'local_helloworld'),
+                new moodle_url('/local/helloworld/index.php')
+            );
+        }
     }
 }
