@@ -22,7 +22,7 @@
  */
 use \local_helloworld\utility\messageform;
 require_once('../../config.php');
-global $DB;
+global $DB, $USER;
 
 // Setup the page.
 $context = context_system::instance();
@@ -44,7 +44,9 @@ $form->display();
 
 if ($data = $form->get_data()) {
     // We have data let's save it in the database.
+    $data->message = format_text($data->message);
     $data->timecreated = time();
+    $data->userid = $USER->id;
     $DB->insert_record('local_helloworld_messages', $data);
 }
 
@@ -54,10 +56,13 @@ $cardlist = new stdClass();
 foreach ($messages as $m) {
     $data = array();
     $data['id'] = $m->id;
+    $name = $DB->get_record('user', ['id' => $m->userid], 'firstname, lastname', MUST_EXIST);
+    $data['name'] = $name->firstname . ' ' . $name->lastname;
     $data['message'] = $m->message;
     $data['timecreated'] = $m->timecreated;
     $cardlist->data[] = $data;
 }
+
 // Add some links.
 $url = new moodle_url('http://192.168.1.100/moodle391');
 $cardlist->url_front = $url->out(false);

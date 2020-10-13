@@ -15,12 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines the version and other meta-info about the plugin
+ * Upgrade script.
  *
  * @package local_helloworld
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-$plugin->component = 'local_helloworld';
-$plugin->version = 2020101206;
+function xmldb_local_helloworld_upgrade($oldversion) {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    if ($oldversion < 2020101206) {
+
+        // Define field userid to be added to local_helloworld_messages.
+        $table = new xmldb_table('local_helloworld_messages');
+        $field = new xmldb_field('userid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'timecreated');
+
+        // Conditionally launch add field id.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Helloworld savepoint reached.
+        upgrade_plugin_savepoint(true, 2020101206, 'local', 'helloworld');
+    }
+}
