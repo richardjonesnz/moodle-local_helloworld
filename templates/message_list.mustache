@@ -1,5 +1,6 @@
 <div class = "table-responsive">
     <table class = "table table-striped">
+        <p>{{notice}}</p>
         {{! Using a get_string helper }}
         <caption>
             {{# str }} message_list, local_helloworld {{/ str }}
@@ -17,6 +18,7 @@
                         <td>{{name}}</td>
                         <td>{{{message}}}</td>
                         <td>{{#userdate}} {{timecreated}}, %d %B %Y, %I:%M %p {{/userdate}}</td>
+                        <td><a href="{{delete}}">{{# str}} delete {{/ str}}</a></td>
                     {{/.}}
                 </tr>
             {{/tabledata}}

@@ -47,3 +47,5 @@ $string['message'] = 'Message';
 $string['name'] = 'Posted by';
 $string['timecreated'] = 'Time';
 $string['message_list'] = 'List of messages';
+$string['nodata'] = 'There are no messages in the database right now';
+$string['message_deleted'] = 'Message deleted.';
