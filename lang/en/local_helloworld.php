@@ -26,6 +26,7 @@ $string['pluginname'] = 'Hello world';
 $string['hello'] = 'Hello User';
 $string['main'] = 'Got to main page';
 $string['frontpage'] = 'Front page';
+$string['manage_messages'] = 'Manage messages';
 
 // Settings.
 $string['manage'] = 'Manage Hello world';
@@ -34,3 +35,15 @@ $string['showinnavigation_detail'] = 'When enabled the site navigation will disp
 
 // Form.
 $string['prompt'] = 'Enter your message for the wall:';
+
+// Permissions
+$string['helloworld:deleteanymessage'] = 'Delete any message';
+$string['helloworld:postmessages'] = 'Post a message';
+$string['helloworld:viewmessages'] = 'View messages';
+
+// Managing messages list.
+$string['id'] = 'id';
+$string['message'] = 'Message';
+$string['name'] = 'Posted by';
+$string['timecreated'] = 'Time';
+$string['message_list'] = 'List of messages';

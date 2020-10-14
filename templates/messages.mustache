@@ -1,5 +1,9 @@
 {{!todo: document template}}
-
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item"><a href="{{url_front}}">{{link_front}}</a></li>
+    <li class="list-group-item"><a href="{{url_here}}">{{link_here}}</a></li>
+    <li class="list-group-item"><a href="{{url_manage}}">{{link_manage}}</a></li>
+</ul>
 <h3>List of messages</h3>
 <div class="card-columns">
     {{# data}}
@@ -13,7 +17,8 @@
     {{/ data}}
 </div>
 <br>
-<ul>
-    <li><a href="{{url_front}}">{{link_front}}</a></li>
-    <li><a href="{{url_here}}">{{link_here}}</a></li>
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item"><a href="{{url_front}}">{{link_front}}</a></li>
+    <li class="list-group-item"><a href="{{url_here}}">{{link_here}}</a></li>
+    <li class="list-group-item"><a href="{{url_manage}}">{{link_manage}}</a></li>
 </ul>

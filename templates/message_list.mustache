@@ -1,0 +1,29 @@
+<div class = "table-responsive">
+    <table class = "table table-striped">
+        {{! Using a get_string helper }}
+        <caption>
+            {{# str }} message_list, local_helloworld {{/ str }}
+        </caption>
+        <thead>
+            {{#tableheaders}}
+                <th>{{.}}</th>
+            {{/tableheaders}}
+        </thead>
+        <tbody>
+            {{#tabledata}}
+                <tr>
+                    {{#.}}
+                        <td>{{id}}</td>
+                        <td>{{name}}</td>
+                        <td>{{{message}}}</td>
+                        <td>{{#userdate}} {{timecreated}}, %d %B %Y, %I:%M %p {{/userdate}}</td>
+                    {{/.}}
+                </tr>
+            {{/tabledata}}
+        </tbody>
+    </table>
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item"><a href="{{url_front}}">{{link_front}}</a></li>
+        <li class="list-group-item"><a href="{{url_here}}">{{link_here}}</a></li>
+    </ul>
+</div>

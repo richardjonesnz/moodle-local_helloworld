@@ -36,55 +36,45 @@ if (isguestuser()) {
 
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('pluginname', 'local_helloworld'));
-$PAGE->set_heading(get_string('hello', 'local_helloworld'));
-$PAGE->set_url(new moodle_url('/local/helloworld/index.php'));
+$PAGE->set_heading(get_string('manage_messages', 'local_helloworld'));
+$PAGE->set_url(new moodle_url('/local/helloworld/edit_mesages.php'));
 
 // Page header information (not the simple html heading).
 echo $OUTPUT->header();
 
-if (has_capability('local/helloworld:viewmessages', $context)) {
-
-    if (has_capability('local/helloworld:postmessages', $context)) {
-
-        // Add a simple html form to be displayed.
-        $form = new messageform();
-        $form->display();
-
-        if ( ($data = data_submitted()) && (confirm_sesskey()) ) {
-            // We have data let's save it in the database.
-            $data->message = format_text($data->message);
-            $data->timecreated = time();
-            $data->userid = $USER->id;
-            $DB->insert_record('local_helloworld_messages', $data);
-        }
-    }
+if (has_capability('local/helloworld:deleteanymessage', $context)) {
 
     // Display the records from the database.
     $messages = $DB->get_records('local_helloworld_messages', null, null, '*');
-    $cardlist = new stdClass();
+    $table = new stdClass();
     foreach ($messages as $m) {
         $data = array();
         $data['id'] = $m->id;
         $name = $DB->get_record('user', ['id' => $m->userid], 'firstname, lastname', MUST_EXIST);
         $data['name'] = $name->firstname . ' ' . $name->lastname;
-        $data['message'] = $m->message;
+        $data['message'] = format_text($m->message);
         $data['timecreated'] = $m->timecreated;
-        $cardlist->data[] = $data;
+        $table->tabledata[] = $data;
     }
+    $table->tableheaders = [get_string('id', 'local_helloworld'),
+                            get_string('name'),
+                            get_string('message', 'local_helloworld'),
+                            get_string('timecreated', 'local_helloworld')];
+
+    // Add some links.
+    $url = new moodle_url('http://192.168.1.100/moodle391');
+    $table->url_front = $url->out(false);
+    $table->link_front = get_string('frontpage', 'local_helloworld');
+    $url = new moodle_url('index.php');
+    $table->url_here = $url->out(false);
+    $table->link_here = get_string('main', 'local_helloworld');
+
+    echo $OUTPUT->render_from_template('local_helloworld/message_list', $table);
+
+} else {
+
+    echo $output->heading('nopermission', 2);
 }
-
-// Add some links.
-$url = new moodle_url('http://192.168.1.100/moodle391');
-$cardlist->url_front = $url->out(false);
-$cardlist->link_front = get_string('frontpage', 'local_helloworld');
-$url = new moodle_url('index.php');
-$cardlist->url_here = $url->out(false);
-$cardlist->link_here = get_string('main', 'local_helloworld');
-$url = new moodle_url('edit_messages.php');
-$cardlist->url_manage = $url->out(false);
-$cardlist->link_manage = get_string('manage_messages', 'local_helloworld');
-
-echo $OUTPUT->render_from_template('local_helloworld/messages', $cardlist);
 
 // Output the moodle footer (not a simple html footer).
 echo $OUTPUT->footer();
